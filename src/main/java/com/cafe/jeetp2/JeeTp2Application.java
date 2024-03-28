@@ -20,18 +20,9 @@ public class JeeTp2Application {
         SpringApplication.run(JeeTp2Application.class, args);
     }
 
-    @Bean
+//    @Bean
     CommandLineRunner commandLineRunner(){
         return args -> {
-            patientRepository.save(new Patient(null, "Ali", LocalDate.of(1990, 5, 15), true, 75,null));
-            patientRepository.save(new Patient(null, "Sarah", LocalDate.of(1985, 8, 22), false, 90,null));
-            patientRepository.save(new Patient(null, "John", LocalDate.of(1978, 3, 7), true, 60,null));
-            patientRepository.save(new Patient(null, "Emily", LocalDate.of(2002, 11, 30), false, 80,null));
-            patientRepository.save(new Patient(null, "David", LocalDate.of(1995, 6, 18), true, 45,null));
-            patientRepository.save(new Patient(null, "Maria", LocalDate.of(1980, 9, 25), false, 70,null));
-
-            patientRepository.deletePatientByNom("Sarah");
-
             System.out.println(patientRepository.findPatientByNom("John").get());
 
             Patient emily = patientRepository.findPatientByNom("Emily").get();
