@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>page</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="card container mt-2">
+            <div class="card-header">Patients</div>
+            <form class="mt-3" method="get" th:action="@{patients}">
+                <label>
+                    <input class="form-control" type="text" name="kw" placeholder="Search" aria-label="Search" th:value="${kw}">
+                </label>
+                <button class="btn btn-secondary" type="submit">Search</button>
+            </form>
+            <div class="card-body nav-pills">
+                <table class="table border-1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Date of Birth</th>
+                            <th>Sick</th>
+                            <th>Score</th>
+                            <th>Delete</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="patient : ${data}">
+                        <td th:text="${patient.getId()}"/>
+                        <td th:text="${patient.getNom()}"/>
+                        <td th:text="${patient.getDateOfBirth()}"/>
+                        <td th:text="${patient.isSick()}"/>
+                        <td th:text="${patient.getScore()}"/>
+                        <td>
+                            <a onclick="javascript:return confirm('are you sure !')"
+                               class="btn btn-danger"
+                               th:href="@{delete(id=${patient.getId()})}">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-success" th:href="@{/editPatient(id=${patient.id})}">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                    </tbody>
+                </table>
+                    <ul class="nav nav-pills ">
+                        <li th:each="page, status:${totalPages}">
+                            <a th:href="@{patients(page=${status.index})}"
+                               th:text="${status.index+1}"
+                               th:class="${status.index==currentPage? 'btn btn-info' : 'btn btn-outline-info'}"></a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
